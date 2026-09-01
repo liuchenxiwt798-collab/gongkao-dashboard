@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#2E7D5B">
+<title>上岸双响炮 · 备考作战仪表盘</title>
+<style>
+:root{
+  --bg:#F2F7F3; --card:#FFFFFF; --ink:#1E3B2F; --muted:#6B8577;
+  --accent:#2E7D5B; --accent-deep:#1B5E43; --mint:#A8D5BA;
+  --line:#D8E8DC;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Noto Serif SC","Source Han Serif SC","Songti SC","STSong","SimSun",serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px; margin:0 auto; padding:48px 32px 64px;}
+.card{
+  background:var(--card); border:1px solid var(--line); border-radius:14px;
+  padding:28px; margin-bottom:28px;
+  box-shadow:0 1px 2px rgba(30,59,47,.04), 0 8px 24px rgba(30,59,47,.05);
+}
+.kicker{font-size:12px; letter-spacing:.35em; color:var(--muted); text-transform:uppercase;}
+h1{font-size:34px; font-weight:600; line-height:1.3;}
+h2{font-size:20px; font-weight:600; margin-bottom:18px;}
+.num{font-variant-numeric:tabular-nums;}
+code{background:var(--bg); padding:2px 6px; border-radius:4px; font-size:13px;}
+.leaf{position:fixed; width:14px; height:14px; border-radius:70% 0 70% 0;
+  background:var(--mint); opacity:.18; pointer-events:none;
+  animation:drift 26s linear infinite;}
+@keyframes drift{from{transform:translateY(105vh) rotate(0deg);}
+  to{transform:translateY(-12vh) rotate(300deg);}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(46,125,91,.35)}50%{box-shadow:0 0 0 8px rgba(46,125,91,0)}}
+@keyframes shimmer{0%{background-position:120% 0}100%{background-position:-120% 0}}
+@media (max-width:640px){
+  .wrap{padding:20px 14px 40px;}
+  .card{padding:18px; border-radius:12px;}
+  h1{font-size:22px;}
+  h2{font-size:16px;}
+  header .kicker{letter-spacing:.2em;}
+  #dash-header > div:nth-of-type(2){flex-direction:column; gap:14px;}
+  #dash-header div[style*="font-size:56px"]{font-size:40px !important;}
+  #kpi span[style*="width:96px"]{width:72px; font-size:13px;}
+  #rhythm table{font-size:13px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .leaf{display:none} *{animation-duration:.001s !important; transition-duration:.001s !important;}
+}
+</style>
+</head>
+<body>
+<i class="leaf" style="left:8%; animation-delay:0s"></i>
+<i class="leaf" style="left:55%; animation-delay:9s"></i>
+<i class="leaf" style="left:86%; animation-delay:17s"></i>
+<div class="wrap">
+
+<header class="card" id="dash-header">
+  <div class="kicker">2027 国考 + 省考 · 双线作战</div>
+  <h1>今天是 <span id="d-day" class="num">D—</span> · 全程已走 <span id="journey-pct" class="num">—</span></h1>
+  <div style="display:flex; gap:40px; margin-top:22px; flex-wrap:wrap;">
+    <div><div class="kicker">距 国考笔试</div>
+      <div style="font-size:56px; font-weight:700; color:var(--accent-deep);"><span id="cd-gk" class="num">—</span><small style="font-size:16px; color:var(--muted)"> 天</small></div>
+      <div style="color:var(--muted)">2026-11-29 周日</div></div>
+    <div><div class="kicker">距 省考联考</div>
+      <div style="font-size:56px; font-weight:700; color:var(--accent-deep);"><span id="cd-sk" class="num">—</span><small style="font-size:16px; color:var(--muted)"> 天</small></div>
+      <div style="color:var(--muted)">2027-03-13 周六</div></div>
+  </div>
+</header>
+
+<section class="card" id="journey">
+  <h2>作战旅程 · 194 天</h2>
+  <div style="position:relative; height:14px; border-radius:7px; background:var(--mint); overflow:hidden;">
+    <div id="bar-journey" style="position:absolute; top:0; bottom:0; left:0; width:0;
+      background:linear-gradient(90deg,var(--accent),var(--accent-deep)); border-radius:7px;
+      transition:width 1.2s cubic-bezier(.22,1,.36,1);"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);
+      background-size:200% 100%; animation:shimmer 2.8s ease-in-out infinite;"></div>
+  </div>
+  <div id="phases" style="display:flex; gap:6px; margin-top:18px; flex-wrap:wrap;"></div>
+</section>
+
+<section class="card" id="kpi">
+  <h2>模块 KPI · 10/15 P1 出口标准</h2>
+  <div id="kpi-bars"></div>
+  <p style="color:var(--muted); font-size:13px; margin-top:10px;">
+    目标线如上；「当前值」待晚间验收官打卡数据同步 · 数据截至 <span id="last-sync">—</span></p>
+</section>
+
+<section class="card" id="shenlun">
+  <h2>申论里程碑</h2>
+  <div id="ms-track" style="display:flex; align-items:center; flex-wrap:wrap;"></div>
+</section>
+
+<section class="card" id="rhythm">
+  <h2>每日节奏 · 4–6h</h2>
+  <table style="width:100%; border-collapse:collapse; font-size:15px;">
+    <tr style="color:var(--muted); font-size:13px; text-align:left;">
+      <th style="padding:8px 0;">时段</th><th>P1 筑基期</th><th>P2 刷题期</th><th>冲刺期</th></tr>
+    <tr style="border-top:1px solid var(--line);"><td style="padding:10px 0;"><b>上午 2h</b></td>
+      <td>行测新课 + 方法笔记</td><td>弱项专项刷题</td><td>按考试钟点模考</td></tr>
+    <tr style="border-top:1px solid var(--line);"><td style="padding:10px 0;"><b>下午 1.5–2h</b></td>
+      <td>当日模块练习 30 题（限时）</td><td>套题 / 专项限时</td><td>申论模考 · 深复盘</td></tr>
+    <tr style="border-top:1px solid var(--line);"><td style="padding:10px 0;"><b>晚上 1h</b></td>
+      <td>申论题型 或 常识 20–30 题</td><td>申论小题 + 错题复盘</td><td>错题速览</td></tr>
+    <tr style="border-top:1px solid var(--line);"><td style="padding:10px 0;"><b>碎片</b></td>
+      <td colspan="3">通勤：常识音频 / 申论素材精读 1 篇</td></tr>
+  </table>
+</section>
+
+<section class="card" id="rules">
+  <h2>五条铁律</h2>
+  <ol style="line-height:2;">
+    <li><b>打卡制</b> — 每晚 21:00 向验收官报告：<code>D12 ✅资料30题 ❌常识</code></li>
+    <li><b>熔断机制</b> — 连续 2 天完成率 &lt;60% → 次日任务减半，只保套题+弱项</li>
+    <li><b>错题本</b> — 当天录入，每周日清零；重做正确率 &lt;80% 的模块定为下周弱项</li>
+    <li><b>真题为王</b> — 套卷只用真题；模拟题仅用于专项</li>
+    <li><b>周日休整</b> — 半天复盘半天休，禁止全天学习</li>
+  </ol>
+</section>
+
+<footer style="text-align:center; color:var(--muted); font-size:13px; margin-top:8px;">
+  上岸双响炮 · D1 2026-09-01 → 国考 11/29 → 省考 3/13 · 由 Hermes 备考舰队（R1–R7）护航
+</footer>
+
+</div>
+<script>
+const STATE = {
+  d1:'2026-09-01',
+  exams:{ guokao:'2026-11-29', shengkao:'2027-03-13' },
+  phases:[
+    {id:'P1', name:'系统筑基',   start:'2026-09-01', end:'2026-10-15'},
+    {id:'P2', name:'刷题强化',   start:'2026-10-16', end:'2026-11-24'},
+    {id:'P3', name:'国考冲刺',   start:'2026-11-25', end:'2026-11-28'},
+    {id:'EX', name:'★ 国考笔试', start:'2026-11-29', end:'2026-11-29'},
+    {id:'P4', name:'复盘重启',   start:'2026-11-30', end:'2026-12-06'},
+    {id:'P5', name:'省考强化',   start:'2026-12-07', end:'2027-01-31'},
+    {id:'P6', name:'省考冲刺',   start:'2027-02-01', end:'2027-03-12'},
+    {id:'SX', name:'★ 省考笔试', start:'2027-03-13', end:'2027-03-13'}
+  ],
+  kpi:[
+    {name:'资料分析', target:75},
+    {name:'判断推理', target:70},
+    {name:'言语理解', target:65},
+    {name:'数量关系', target:85},
+    {name:'常识',     target:60}
+  ],
+  ms:[
+    {n:'认识申论',   when:'W2 · 9/7–13',  s:'2026-09-07', e:'2026-09-13'},
+    {n:'概括题',     when:'W3 · 9/14–20', s:'2026-09-14', e:'2026-09-20'},
+    {n:'分析题',     when:'W4 · 9/21–27', s:'2026-09-21', e:'2026-09-27'},
+    {n:'大作文首篇', when:'W6 · ~10/5',   s:'2026-10-05', e:'2026-10-11'},
+    {n:'整卷限时',   when:'P2 起 · 10/16', s:'2026-10-16', e:'2027-03-12'}
+  ],
+  lastSync:'2026-09-02'
+};
+const $ = id => document.getElementById(id);
+const DAY = 864e5;
+const d = s => new Date(s + 'T00:00:00');
+const _now = new Date();
+const today = new Date(_now.getFullYear(), _now.getMonth(), _now.getDate());
+const dNum  = Math.round((today - d(STATE.d1)) / DAY) + 1;
+const daysTo = s => Math.max(0, Math.round((d(s) - today) / DAY));
+const total = Math.round((d(STATE.exams.shengkao) - d(STATE.d1)) / DAY) + 1;
+const done  = Math.min(dNum, total);
+
+$('d-day').textContent = 'D' + dNum;
+$('journey-pct').textContent = (done / total * 100).toFixed(1) + '%';
+$('cd-gk').textContent = daysTo(STATE.exams.guokao);
+$('cd-sk').textContent = daysTo(STATE.exams.shengkao);
+$('last-sync').textContent = STATE.lastSync;
+
+const ph = document.getElementById('phases');
+STATE.phases.forEach(p => {
+  const s = d(p.start), e = d(p.end);
+  const st = today > e ? 'done' : (today >= s ? 'now' : 'todo');
+  const b = document.createElement('div');
+  b.style.cssText = 'padding:8px 14px; border-radius:20px; font-size:14px;' + ({
+    done:'background:var(--accent-deep); color:#fff;',
+    now :'border:2px solid var(--accent); color:var(--accent-deep); background:#fff; animation:pulse 2s ease-in-out infinite;',
+    todo:'border:1px solid var(--line); color:var(--muted);'
+  })[st];
+  const days = Math.round((e - s) / DAY) + 1;
+  b.innerHTML = '<b>' + p.id + '</b> ' + p.name + ' · ' + days + '天' +
+    (st === 'now' ? ' <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);vertical-align:middle;"></span>' : '');
+  ph.appendChild(b);
+});
+
+const kb = document.getElementById('kpi-bars');
+STATE.kpi.forEach((k, i) => {
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex; align-items:center; gap:14px; margin:10px 0;';
+  row.innerHTML =
+    '<span style="width:96px; font-size:14px;">' + k.name + '</span>' +
+    '<span style="flex:1; height:10px; border-radius:5px; background:var(--mint); overflow:hidden; position:relative;">' +
+      '<span class="fill" data-t="' + k.target + '" style="position:absolute; top:0; bottom:0; left:0; width:0;' +
+      ' background:linear-gradient(90deg,var(--accent),var(--accent-deep));' +
+      ' transition:width 1s cubic-bezier(.22,1,.36,1) ' + (i * 80) + 'ms;"></span></span>' +
+    '<span class="num" style="width:44px; text-align:right; font-weight:600;">' + k.target + '%</span>';
+  kb.appendChild(row);
+});
+
+const msBox = document.getElementById('ms-track');
+STATE.ms.forEach(m => {
+  const s = d(m.s), e = d(m.e);
+  const st = today > e ? 'done' : (today >= s ? 'now' : 'todo');
+  const div = document.createElement('div');
+  div.style.cssText = 'flex:1; min-width:150px; text-align:center; padding:10px 0;' +
+    (st === 'todo' ? 'border-bottom:3px solid var(--line); color:var(--muted);' : 'border-bottom:3px solid var(--accent);');
+  div.innerHTML = '<b>' + m.n + '</b><div style="font-size:13px;' + (st === 'todo' ? '' : 'color:var(--accent-deep);') + '">' +
+    m.when + ' · ' + ({done:'✔ 完成', now:'进行中', todo:'未开始'})[st] + '</div>';
+  msBox.appendChild(div);
+});
+
+setTimeout(() => {
+  document.getElementById('bar-journey').style.width = (done / total * 100) + '%';
+  document.querySelectorAll('#kpi-bars .fill').forEach(f => { f.style.width = f.dataset.t + '%'; });
+}, 300);
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+}
+</script>
+</body>
+</html>

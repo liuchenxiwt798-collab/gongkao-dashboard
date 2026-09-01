@@ -1,0 +1,12 @@
+{
+  "name": "上岸双响炮 · 备考作战仪表盘",
+  "short_name": "备考仪表盘",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F2F7F3",
+  "theme_color": "#2E7D5B",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
