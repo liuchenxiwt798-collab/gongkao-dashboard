@@ -119,22 +119,59 @@ code{background:var(--bg); padding:2px 6px; border-radius:4px; font-size:13px;}
 <!--END:tonight-->
 
 <!--BEGIN:evening-->
-<div class="kicker">R2 晚间验收官 · D58（10/28 周三）· 17:5x 管线自检写入</div>
-  <h2 style="margin-top:8px;">今晚 21:00 的验收班次还没跑，这张卡先占位</h2>
+<div class="kicker">R2 晚间验收官 · D58（10/28 周三）· 18:00 手工验证班次</div>
+  <h2 style="margin-top:8px;">今天动了两处、交了 0 份证据：报名页读到了、粉笔开了一小时，但报告页 0 张、数字 0 行</h2>
   <p style="line-height:1.9; font-size:15px;">
-    8 个 bot 已于 <b>10/25 20:03–20:04</b> 全部删除，原先「投递到 Bot Chat 线程」的出口永久失效（10/25 20:10 起每次 completed 但 delivery failed）。三个定时班次改成 <b>直接写这张卡</b>：R1 08:30 写顶部今日三件事、R2 21:00 写本卡验收、R3 周日 20:00 写周复盘。<br>
-    本卡在 <b>17:5x</b> 由一次人工自检写入，只为验证「写卡 → 14 项仪表盘校验 → 站点同步 → Pages 推送」这条链路通不通。<b>今晚 21:00 的班次会用真实打卡结果覆盖本卡。</b>
+    截至 <b>18:00</b>（不是 21:00 正班，是手工验证跑通链路）：<b>日课 4 项完成 0 项，打卡 0</b>。
+    今天有两件事确实发生了——<b>11:34 登录报考系统读到资格审查页</b>、<b>16:56 打开粉笔并持续到此刻</b>——但都停在「看」，
+    没有一份带分数的报告页、没有一行数字。所以不记完成。
   </p>
+
   <div style="background:#FDF3EF; border:1px solid #E8C4B8; border-radius:10px; padding:16px; margin:16px 0;">
-    <b style="color:#8C3A2B;">仍未回一行的那一件（1 分钟）</b>
-    <div style="line-height:1.9; font-size:14px; margin-top:6px;">
-      报名状态：<code>已提交·审查通过</code> ／ <code>已提交·审查中</code> ／ <code>已提交·未通过</code> ／ <code>未提交</code>——任选一个回一行即可。<br>
-      <span style="color:var(--muted); font-size:13px;">报名提交 10/24 18:00 已截止；若「审查通过」→ 11/1 开闸缴费、11/6 截止，逾期作废。</span>
+    <b style="color:#8C3A2B;">① 逐条对照：要求 vs 实际（只认证据）</b>
+    <div style="line-height:2.0; font-size:14px; margin-top:8px;">
+      <b>① 回一行报名状态</b>（1 min）→ <b>未回</b>。<br>
+      <span style="color:var(--muted); font-size:13px;">证据：11:34:24 登录页 → 11:34:36 person_judge（资格审查页）→ 11:35:23 专题首页。动作对了，结果没写出来，我不代猜。</span><br>
+      <b>② 粉笔数量关系·统筹 10 题，到报告页</b>（15 min）→ <b>0 题</b>。<br>
+      <span style="color:var(--muted); font-size:13px;">证据：fenbi-student 16:56:47 启动、5 个进程至今在跑；主窗口标题是「粉笔课堂」（课程页），Cache 被进程独占、读不到 reportId/accuracy 数据 → 无报告生成。</span><br>
+      <b>③ 粉笔资料分析 15 题，到报告页</b>（25 min）→ <b>0 套</b>。<br>
+      <span style="color:var(--muted); font-size:13px;">全树 229 个文件、今日最新写入 17:56（仅 GPU/Dawn 缓存），仍无任何做题报告字段命中。</span><br>
+      <b>④ 回一行数字</b>（1 min）→ <b>未回</b>。<br>
+      <b>打卡台账</b>：attempts.jsonl 仍 16 行、mtime 2026-08-20 15:24 → <b>69 天零记录</b>（自 D1 起 58 天全零）。
     </div>
   </div>
-  <p style="color:var(--muted); font-size:13px; line-height:1.8;">
-    <span style="font-size:12px;">本期由人工自检生成 · 17:54 · 非班次产出（班次产出会替换本卡）</span>
+
+  <p style="line-height:1.9; font-size:14px;">
+    <b>今天真实的两个亮点（不许抹掉）</b>：
+    ① <b>08:54–09:18 建行 2027 校招</b>预约批次 → 我的预约 → 准考证打印页，<b>25 分钟做完</b>；
+    ② <b>10:28:44 手动打开过仪表盘</b>（今天的卡你看过了）。
+    这两件事的共同点：<b>有截止、有明确按钮</b>。国考那一行字拖到今天，缺的不是能力，是「点下去」的那一下。
   </p>
+
+  <div style="background:#FFF8E6; border:1px solid #E8D4A0; border-radius:10px; padding:16px; margin:16px 0;">
+    <b>② 熔断判断（两个方向都写清）</b>
+    <div style="line-height:1.9; font-size:14px; margin-top:6px;">
+      · <b>继续熔断</b>：自 <b>2026-09-07</b> 起长期生效，今天是第 <b>51 天</b>。今天仍无任何带分数的报告页 → <b>不撤</b>、不加码、不红警。<br>
+      · <b>明日减半</b>：10/27 与 10/28 <b>连续 2 天完成率 &lt; 60%</b>（10/27 无班次、零证据；10/28 至今 0/4）→ 10/29 按 <b>≈25 分钟</b>发，不再按 70 分钟。<br>
+      · <b>解除条件（很近，一步就到）</b>：<b>任一份带分数的报告页</b>或<b>任一行数字</b>到手 → 次日<b>撤熔断、复全量 4–6 小时</b>，同时解 R5 阅卷与 R7 选岗阻塞；连续 3 天有数字 → 回 2.5 小时。
+    </div>
+  </div>
+
+  <div style="background:#F2F7F3; border:1px solid #BFD6C8; border-radius:10px; padding:16px; margin:16px 0;">
+    <b style="color:#2E7D5B;">③ 明日三件事 · D59（10/29 周四）· 减半版 ≈25 分钟</b>
+    <div style="line-height:1.95; font-size:14px; margin-top:6px;">
+      ① <b>1 分钟</b>：回一行报名状态——<code>已提交·审查通过</code> ／ <code>已提交·审查中</code> ／ <code>已提交·未通过</code> ／ <code>未提交</code>。<br>
+      ② <b>8 分钟</b>：粉笔「数量关系」<b>5 题</b>，点「开始」只做 5 题，<b>做到出报告页</b>。<br>
+      ③ <b>10 分钟</b>：粉笔「资料分析」<b>5 题</b>，<b>做到出报告页</b>（唯一基线 53%，8/15）。<br>
+      ④ <b>1 分钟</b>：回一行数字，例如 <code>数量 3/5 · 资料 3/5</code>；截图同样算。<br>
+      <span style="color:var(--muted); font-size:13px;">开不动就照 60 秒协议：水 → 手机放身后 → 点「开始」→ 只承诺 3 题 → 10 分钟可以合法停。3 题也算今天通关。</span>
+    </div>
+  </div>
+
+  <p style="line-height:1.8; font-size:13px; color:var(--muted);">
+    <b>时间硬点</b>：缴费 <b>11/1 开闸 → 11/6 截止</b>（3 天后），逾期作废；距国考 <b>32 天</b>、距省考 <b>136 天</b>。若 ① 是「未提交」，国考本年关闭，主线立刻转省考、W10 整套重排。
+  </p>
+  <p style="color:var(--muted); font-size:13px;">本期自动生成 · 18:00 · R2 手工验证班次（21:00 正班另出，会用真实打卡覆盖本卡）</p>
 <!--END:evening-->
 
 <!--BEGIN:weekly-->
