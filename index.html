@@ -72,7 +72,7 @@ code{background:var(--bg); padding:2px 6px; border-radius:4px; font-size:13px;}
 </header>
 
 <section class="card" id="tonight" style="border-left:4px solid var(--accent-deep);">
-  <div class="kicker">R1 晨间排期官 · D58（10/28 周三 · 08:53 补跑班次）</div>
+  <div class="kicker">R1 晨间排期官 · D58（10/28 周三 · 17:24 开机刷新班次，未重做排班）</div>
   <h2 style="margin-top:8px;">今天 3 件事、42 分钟；第 ① 件仍是那 1 分钟的一行字</h2>
   <p style="line-height:1.9; font-size:15px;">
     今早 <b>08:52</b> 开机，<b>08:54–08:57</b> 你就在给<b>建行 2027 校招预约考试批次</b>（选择批次 → 我的预约 → 准考证打印页）。要抢批次、有截止日的事，你 2 分钟就能动起来——<b>行动力不缺</b>。<br>
@@ -111,7 +111,8 @@ code{background:var(--bg); padding:2px 6px; border-radius:4px; font-size:13px;}
   </div>
   <p style="color:var(--muted); font-size:13px; line-height:1.8;">
     报名提交 <b>10/24 18:00 已截止（4 天）</b>：若 ① 是「未提交」→ 本年国考关闭，主线立刻转<b>省考 136 天</b>，R3 把 W10 整套重排；若「审查通过」→ 记死 <b>11/1 开闸缴费（4 天后）</b>、11/6 截止，逾期作废。<br>
-    昨晚 21:00 的验收班次 <b>Connection error 没跑成</b>，所以昨晚没人催你打卡——不是你被放过。熔断自 9/7 长期生效，今天<b>不加剂量</b>；<b>任一份带分数的报告页到手 → 当天撤熔断、复全量 4–6h</b>，并解 R5 阅卷与 R7 选岗的阻塞。资料分析基线仍是 53%（8/15 样本），其余四模块 0 样本。
+    昨晚 21:00 的验收班次 <b>Connection error 没跑成</b>，所以昨晚没人催你打卡——不是你被放过。熔断自 9/7 长期生效，今天<b>不加剂量</b>；<b>任一份带分数的报告页到手 → 当天撤熔断、复全量 4–6h</b>，并解 R5 阅卷与 R7 选岗的阻塞。资料分析基线仍是 53%（8/15 样本），其余四模块 0 样本。<br>
+    <span style="font-size:12px;">本期自动生成 · 17:24 · 开机刷新触发（本机 10:27:44 开机，距上次生成 8 小时 19 分；三件事与时长未改动）</span>
   </p>
 </section>
 
@@ -196,7 +197,7 @@ code{background:var(--bg); padding:2px 6px; border-radius:4px; font-size:13px;}
 </section>
 
 <footer style="text-align:center; color:var(--muted); font-size:13px; margin-top:8px;">
-  上岸双响炮 · D1 2026-09-01 → 国考 11/29 → 省考 3/13 · 由 Hermes 备考舰队（R1–R7）护航
+  上岸双响炮 · D1 2026-09-01 → 国考 11/29 → 省考 3/13 · 由 Hermes 备考舰队（R1–R7）护航 · 本页每 3 分钟自动刷新
 </footer>
 
 </div>
@@ -292,6 +293,20 @@ setTimeout(() => {
   document.getElementById('bar-journey').style.width = (done / total * 100) + '%';
   document.querySelectorAll('#kpi-bars .fill').forEach(f => { f.style.width = f.dataset.t + '%'; });
 }, 300);
+
+// 自动刷新：开机触发的轻班次会把新卡写进本文件，页面每 3 分钟静默重载一次即可看到
+(function () {
+  var K = 'gk-dash-scroll';
+  try {
+    var y = sessionStorage.getItem(K);
+    if (y !== null) { sessionStorage.removeItem(K); window.scrollTo(0, +y); }
+  } catch (e) {}
+  setInterval(function () {
+    if (document.hidden) return;
+    try { sessionStorage.setItem(K, String(window.scrollY || 0)); } catch (e) {}
+    location.reload();
+  }, 180000);
+})();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(()=>{}));
