@@ -71,6 +71,7 @@ code{background:var(--bg); padding:2px 6px; border-radius:4px; font-size:13px;}
   </div>
 </header>
 
+<!--BEGIN:tonight-->
 <section class="card" id="tonight" style="border-left:4px solid var(--accent-deep);">
   <div class="kicker">R1 晨间排期官 · D58（10/28 周三 · 17:24 开机刷新班次，未重做排班）</div>
   <h2 style="margin-top:8px;">今天 3 件事、42 分钟；第 ① 件仍是那 1 分钟的一行字</h2>
@@ -115,7 +116,28 @@ code{background:var(--bg); padding:2px 6px; border-radius:4px; font-size:13px;}
     <span style="font-size:12px;">本期自动生成 · 17:24 · 开机刷新触发（本机 10:27:44 开机，距上次生成 8 小时 19 分；三件事与时长未改动）</span>
   </p>
 </section>
+<!--END:tonight-->
 
+<!--BEGIN:evening-->
+<div class="kicker">R2 晚间验收官 · D58（10/28 周三）· 17:5x 管线自检写入</div>
+  <h2 style="margin-top:8px;">今晚 21:00 的验收班次还没跑，这张卡先占位</h2>
+  <p style="line-height:1.9; font-size:15px;">
+    8 个 bot 已于 <b>10/25 20:03–20:04</b> 全部删除，原先「投递到 Bot Chat 线程」的出口永久失效（10/25 20:10 起每次 completed 但 delivery failed）。三个定时班次改成 <b>直接写这张卡</b>：R1 08:30 写顶部今日三件事、R2 21:00 写本卡验收、R3 周日 20:00 写周复盘。<br>
+    本卡在 <b>17:5x</b> 由一次人工自检写入，只为验证「写卡 → 14 项仪表盘校验 → 站点同步 → Pages 推送」这条链路通不通。<b>今晚 21:00 的班次会用真实打卡结果覆盖本卡。</b>
+  </p>
+  <div style="background:#FDF3EF; border:1px solid #E8C4B8; border-radius:10px; padding:16px; margin:16px 0;">
+    <b style="color:#8C3A2B;">仍未回一行的那一件（1 分钟）</b>
+    <div style="line-height:1.9; font-size:14px; margin-top:6px;">
+      报名状态：<code>已提交·审查通过</code> ／ <code>已提交·审查中</code> ／ <code>已提交·未通过</code> ／ <code>未提交</code>——任选一个回一行即可。<br>
+      <span style="color:var(--muted); font-size:13px;">报名提交 10/24 18:00 已截止；若「审查通过」→ 11/1 开闸缴费、11/6 截止，逾期作废。</span>
+    </div>
+  </div>
+  <p style="color:var(--muted); font-size:13px; line-height:1.8;">
+    <span style="font-size:12px;">本期由人工自检生成 · 17:54 · 非班次产出（班次产出会替换本卡）</span>
+  </p>
+<!--END:evening-->
+
+<!--BEGIN:weekly-->
 <section class="card" id="weekly" style="border-left:4px solid var(--accent);">
   <div class="kicker">R3 周复盘官 · W8（10/19–10/25）</div>
   <h2 style="margin-top:8px;">本周：打卡 0/7，但你其实在动</h2>
@@ -144,6 +166,7 @@ code{background:var(--bg); padding:2px 6px; border-radius:4px; font-size:13px;}
     系统侧说明：10/18–10/25 舰队因 API key 过期整队哑了 8 天（14 班失败），今天 18:49 才恢复，这 8 天的「没提醒」不全怪你。
   </p>
 </section>
+<!--END:weekly-->
 
 <section class="card" id="journey">
   <h2>作战旅程 · 194 天</h2>
